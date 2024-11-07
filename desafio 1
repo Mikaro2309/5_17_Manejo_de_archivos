@@ -1,9 +1,23 @@
-def agregar_prestamo():
+def registrar_prestamo(nombre_libro, nombre_prestatario, fecha_prestamo):
+    # Crear o abrir el archivo 'prestamos.txt' en modo append
     with open('prestamos.txt', 'a') as archivo:
-        libro = input("Ingrese el nombre del libro: ")
-        prestatario = input("Ingrese el nombre del prestatario: ")
-        fecha = input("Ingrese la fecha del préstamo (YYYY-MM-DD): ")
-        archivo.write(f"{libro},{prestatario},{fecha}\n")
-        print("Préstamo agregado con éxito.")
+        # Escribir los datos del préstamo en el archivo
+        archivo.write(f"{nombre_libro} | {nombre_prestatario} | {fecha_prestamo}\n")
 
-agregar_prestamo()
+    print("El préstamo se ha registrado correctamente.")
+
+def mostrar_menu():
+    # Simulación de opciones de usuario (sin input())
+    opciones = [
+        ("El Quijote", "Juan Pérez", "05/11/2024"),
+        ("Cien años de soledad", "Ana García", "06/11/2024")
+    ]
+    
+    # Simulando un ciclo donde el usuario ingresa préstamos automáticamente
+    for libro, prestatario, fecha in opciones:
+        registrar_prestamo(libro, prestatario, fecha)
+    
+    print("Todos los préstamos han sido registrados.")
+
+# Ejecutar el programa
+mostrar_menu()
