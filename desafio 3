@@ -1,0 +1,19 @@
+import csv
+
+def actualizar_inventario(titulo, nueva_cantidad):
+    try:
+        with open('inventario.csv', 'r') as archivo:
+            lector = csv.reader(archivo)
+            filas = [fila for fila in lector]
+
+        with open('inventario.csv', 'w', newline='') as archivo:
+            escritor = csv.writer(archivo)
+            for fila in filas:
+                if fila[0].lower() == titulo.lower():
+                    fila[1] = str(nueva_cantidad)
+                escritor.writerow(fila)
+        print("Inventario actualizado con éxito.")
+    except FileNotFoundError:
+        print("El archivo inventario.csv no existe.")
+
+actualizar_inventario(input("Ingrese el título del libro: "), input("Ingrese la nueva cantidad: "))
