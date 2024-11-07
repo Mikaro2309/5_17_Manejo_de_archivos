@@ -1,0 +1,23 @@
+def eliminar_prestamo():
+    try:
+        with open('prestamos.txt', 'r') as archivo:
+            prestamos = archivo.readlines()
+
+        for i, prestamo in enumerate(prestamos, 1):
+            print(f"{i}. {prestamo.strip()}")
+
+        opcion = int(input("Seleccione el número del préstamo a eliminar: ")) - 1
+
+        if 0 <= opcion < len(prestamos):
+            prestamos.pop(opcion)
+            with open('prestamos.txt', 'w') as archivo:
+                archivo.writelines(prestamos)
+            print("Préstamo eliminado con éxito.")
+        else:
+            print("Opción inválida.")
+    except FileNotFoundError:
+        print("El archivo prestamos.txt no existe.")
+    except ValueError:
+        print("Entrada inválida.")
+
+eliminar_prestamo()
