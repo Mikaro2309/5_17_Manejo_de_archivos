@@ -1,23 +1,30 @@
-def eliminar_prestamo():
-    try:
-        with open('prestamos.txt', 'r') as archivo:
-            prestamos = archivo.readlines()
+# Simulación del contenido de 'prestamos.txt'
+prestamos = [
+    "1,Juan Perez,2024-10-21,5000\n",
+    "2,Maria Garcia,2024-10-22,3000\n",
+    "3,Pedro Lopez,2024-10-23,4500\n"
+]
 
-        for i, prestamo in enumerate(prestamos, 1):
-            print(f"{i}. {prestamo.strip()}")
+def mostrar_prestamos(prestamos):
+    """Muestra los registros de préstamo numerados."""
+    print("Registros de Préstamos:")
+    for i, prestamo in enumerate(prestamos, 1):
+        print(f"{i}. {prestamo.strip()}")
 
-        opcion = int(input("Seleccione el número del préstamo a eliminar: ")) - 1
+def eliminar_prestamo(prestamos, indice):
+    """Elimina el registro de préstamo seleccionado y muestra los resultados actualizados."""
+    del prestamos[indice - 1]  # Elimina el préstamo seleccionado
 
-        if 0 <= opcion < len(prestamos):
-            prestamos.pop(opcion)
-            with open('prestamos.txt', 'w') as archivo:
-                archivo.writelines(prestamos)
-            print("Préstamo eliminado con éxito.")
-        else:
-            print("Opción inválida.")
-    except FileNotFoundError:
-        print("El archivo prestamos.txt no existe.")
-    except ValueError:
-        print("Entrada inválida.")
+# Mostrar los registros de préstamos
+mostrar_prestamos(prestamos)
 
-eliminar_prestamo()
+# Simular selección de usuario para eliminar (por ejemplo, selecciona el préstamo 2)
+seleccion = 2  # Cambia este valor para probar diferentes eliminaciones
+
+if 1 <= seleccion <= len(prestamos):
+    eliminar_prestamo(prestamos, seleccion)
+    print("Registro eliminado correctamente.")
+    # Mostrar los registros después de la eliminación
+    mostrar_prestamos(prestamos)
+else:
+    print("Selección inválida.")
