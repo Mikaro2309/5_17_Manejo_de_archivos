@@ -1,14 +1,28 @@
-def buscar_libros_por_autor(autor_buscado):
-    try:
-        with open('libros.txt', 'r') as archivo:
-            libros = [line.strip() for line in archivo if autor_buscado.lower() in line.lower()]
-            if libros:
-                print("Libros encontrados:")
-                for libro in libros:
-                    print(libro)
-            else:
-                print("No se encontraron libros para el autor especificado.")
-    except FileNotFoundError:
-        print("El archivo libros.txt no existe.")
+def buscar_libros_por_autor(autor):
+    # Lista simulada de libros (simulando el contenido de libros.txt)
+    libros = [
+        "Cien años de soledad - Gabriel García Márquez",
+        "El amor en los tiempos del cólera - Gabriel García Márquez",
+        "Don Quijote de la Mancha - Miguel de Cervantes",
+        "La sombra del viento - Carlos Ruiz Zafón"
+    ]
+    
+    libros_encontrados = []  # Lista para almacenar los libros encontrados
 
-buscar_libros_por_autor(input("Ingrese el nombre del autor: "))
+    for libro in libros:
+        # Suponiendo que el formato de cada línea es: "Libro - Autor"
+        datos = libro.strip().split(' - ')
+        if len(datos) == 2:  # Comprobar que la línea tiene el formato esperado
+            libro_titulo, libro_autor = datos
+            if autor.lower() in libro_autor.lower():  # Buscar coincidencias sin importar mayúsculas/minúsculas
+                libros_encontrados.append(libro_titulo)
+
+    if libros_encontrados:
+        print(f"Libros de {autor}:")
+        for libro in libros_encontrados:
+            print(f"- {libro}")
+    else:
+        print(f"No se encontraron libros de {autor}.")
+
+# Ejemplo de uso
+buscar_libros_por_autor("Gabriel García Márquez")
