@@ -1,0 +1,14 @@
+def buscar_libros_por_autor(autor_buscado):
+    try:
+        with open('libros.txt', 'r') as archivo:
+            libros = [line.strip() for line in archivo if autor_buscado.lower() in line.lower()]
+            if libros:
+                print("Libros encontrados:")
+                for libro in libros:
+                    print(libro)
+            else:
+                print("No se encontraron libros para el autor especificado.")
+    except FileNotFoundError:
+        print("El archivo libros.txt no existe.")
+
+buscar_libros_por_autor(input("Ingrese el nombre del autor: "))
