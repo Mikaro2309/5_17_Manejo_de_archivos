@@ -1,19 +1,41 @@
 import csv
+import os
 
-def actualizar_inventario(titulo, nueva_cantidad):
-    try:
-        with open('inventario.csv', 'r') as archivo:
-            lector = csv.reader(archivo)
-            filas = [fila for fila in lector]
+# Función para actualizar la cantidad de copias de un libro
+def actualizar_inventario(nombre_libro, nuevas_copias):
+    # Verificar si el archivo existe, de lo contrario crear uno vacío
+    if not os.path.exists('inventario.csv'):
+        with open('inventario.csv', mode='w', newline='', encoding='utf-8') as file:
+            escritor_csv = csv.writer(file)
+            escritor_csv.writerow(['Nombre del libro', 'Número de copias'])  # Escribir encabezados
+        print("El archivo inventario.csv ha sido creado.")
+        return
 
-        with open('inventario.csv', 'w', newline='') as archivo:
-            escritor = csv.writer(archivo)
-            for fila in filas:
-                if fila[0].lower() == titulo.lower():
-                    fila[1] = str(nueva_cantidad)
-                escritor.writerow(fila)
-        print("Inventario actualizado con éxito.")
-    except FileNotFoundError:
-        print("El archivo inventario.csv no existe.")
+    # Leer el archivo inventario.csv
+    with open('inventario.csv', mode='r', newline='', encoding='utf-8') as file:
+        lector_csv = csv.reader(file)
+        libros = list(lector_csv)
 
-actualizar_inventario(input("Ingrese el título del libro: "), input("Ingrese la nueva cantidad: "))
+    # Buscar el libro en el inventario y actualizar su cantidad de copias
+    libro_encontrado = False
+    for libro in libros:
+        if libro[0] == nombre_libro:
+            libro[1] = str(nuevas_copias)  # Actualizamos el número de copias
+            libro_encontrado = True
+            break
+
+    # Si no se encontró el libro, agregarlo al inventario
+    if not libro_encontrado:
+        libros.append([nombre_libro, str(nuevas_copias)])
+
+    # Escribir de nuevo el archivo con los datos actualizados
+    with open('inventario.csv', mode='w', newline='', encoding='utf-8') as file:
+        escritor_csv = csv.writer(file)
+        escritor_csv.writerows(libros)
+
+    print(f"El inventario de '{nombre_libro}' se ha actualizado exitosamente.")
+
+# Ejemplo de uso: actualizamos el libro "Python para todos" con 10 nuevas copias
+nombre_libro = "Python para todos"
+nuevas_copias = 10
+actualizar_inventario(nombre_libro, nuevas_copias)
