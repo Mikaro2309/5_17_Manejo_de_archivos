@@ -1,0 +1,9 @@
+def agregar_prestamo():
+    with open('prestamos.txt', 'a') as archivo:
+        libro = input("Ingrese el nombre del libro: ")
+        prestatario = input("Ingrese el nombre del prestatario: ")
+        fecha = input("Ingrese la fecha del préstamo (YYYY-MM-DD): ")
+        archivo.write(f"{libro},{prestatario},{fecha}\n")
+        print("Préstamo agregado con éxito.")
+
+agregar_prestamo()
